@@ -6,4 +6,5 @@ public class LoginResult
 {
     public required bool IsLogged { get; init; }
     public Role?  Role { get; init; }
+    public string?  Token { get; init; }
 }

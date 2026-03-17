@@ -29,19 +29,8 @@ public class Login(IAuthService authService) : Endpoint<LoginRequest>
             await SendUnauthorizedAsync(ct);
             return;
         }
-        
-        var claims = new List<Claim>
-        {
-            new(ClaimTypes.Name, req.Login),
-            new(ClaimTypes.Role, loginResult.Right.Role.ToString()!)
-        };
 
-        Console.WriteLine(loginResult.Right.Role.ToString()!);
-        var identity = new ClaimsIdentity(claims, "cookie");
-        var principal = new ClaimsPrincipal(identity);
-
-        await HttpContext.SignInAsync("cookie", principal);
-        await SendOkAsync(ct);
+        await SendOkAsync(new { token = loginResult.Right.Token, role = loginResult.Right.Role.ToString() }, ct);
     }
 }
 

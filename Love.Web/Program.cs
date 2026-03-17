@@ -1,8 +1,11 @@
+using System.Text;
 using DotNetEnv;
 using FastEndpoints;
 using Love.Application.Interfaces;
 using Love.Application.Services;
 using Love.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 Env.Load();
 
@@ -28,16 +31,16 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAuthentication("cookie")
-    .AddCookie("cookie", options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        options.Cookie.Name = "MyAuthCookie";
-        options.Cookie.SameSite = SameSiteMode.None;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        options.Events.OnRedirectToLogin = context =>
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            return Task.CompletedTask;
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")!)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
         };
     });
 
