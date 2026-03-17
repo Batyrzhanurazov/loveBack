@@ -1,0 +1,52 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.usercode
+*.opendb
+*.VC.db
+*.sdf
+*.cache
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio Code
+.vscode/
+
+# Packages
+# ignore packages directory
+[Pp]ackages/
+# ignore test results
+TestResults/
+
+# Azure Artifacts
+.artifactignore
+
+# Rider
+.idea/
+
+# DotNet Tooling
+.dotnet/
+
+# OS-specific files
+.DS_Store # Mac
+Thumbs.db # Windows
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+*.log
+*.pfx
+*.snk
+
+# NuGet
+*.nupkg
+# NuGet cache files
+.nuget/
+# The following ignores NuGet's automatic package restoration
+# directories, including .tools, .packages, and others.
+.tools/
+.packages/
+
+# Temporary files
+*.[Tt]mp
