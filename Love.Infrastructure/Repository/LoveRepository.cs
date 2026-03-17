@@ -114,7 +114,17 @@ public class LoveRepository(IDbConnection connection) : IRepository
 
     private async Task<LoveMessage?> TryGetUnusedMessageAsync()
     {
-        var sql = "SELECT id, message, is_used FROM messages WHERE is_used = FALSE ORDER BY RANDOM() LIMIT 1";
+        var sql = """
+                  UPDATE messages 
+                  SET is_used = TRUE 
+                  WHERE id = (
+                      SELECT id FROM messages 
+                      WHERE is_used = FALSE 
+                      ORDER BY RANDOM() 
+                      LIMIT 1
+                  )
+                  RETURNING id, message, is_used;
+                  """;
         return await connection.QueryFirstOrDefaultAsync<LoveMessage?>(sql);
     }
 
