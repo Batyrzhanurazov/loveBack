@@ -1,4 +1,5 @@
 ﻿using Love.Application.Interfaces;
+using Love.Application.Services;
 using Love.Domain.Enums;
 using Love.Domain.Models;
 
@@ -27,13 +28,13 @@ public class DatabaseSeeder(IRepository repository)
             new User
             {
                 Login = Environment.GetEnvironmentVariable("AMIRA_LOGIN")!,
-                Password = Isopoh.Cryptography.Argon2.Argon2.Hash(Environment.GetEnvironmentVariable("AMIRA_PASSWORD")!),
+                Password = AuthService.HashPassword(Environment.GetEnvironmentVariable("AMIRA_PASSWORD")!),
                 Role = Role.User
             },
             new User
             {
                 Login = Environment.GetEnvironmentVariable("ADMIN_LOGIN")!,
-                Password = Isopoh.Cryptography.Argon2.Argon2.Hash(Environment.GetEnvironmentVariable("ADMIN_PASSWORD")!),
+                Password = AuthService.HashPassword(Environment.GetEnvironmentVariable("ADMIN_PASSWORD")!),
                 Role = Role.Admin
             }
         };
