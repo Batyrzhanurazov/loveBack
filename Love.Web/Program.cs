@@ -32,6 +32,8 @@ builder.Services.AddAuthentication("cookie")
     .AddCookie("cookie", options =>
     {
         options.Cookie.Name = "MyAuthCookie";
+        options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         options.Events.OnRedirectToLogin = context =>
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
