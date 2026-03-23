@@ -18,4 +18,9 @@ public class LoveService(IRepository repository) : ILoveService
 
         return messageResult.Right.Message;
     }
+
+    public async Task PingDbAsync()
+    { 
+        await repository.HasMessagesAsync();
+    }
 }
